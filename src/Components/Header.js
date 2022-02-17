@@ -22,6 +22,9 @@ function Header(props) {
                 props.setAddress(null);
             }
         });
+        if (props.Address != null) {
+            props.requestBalance(props.Address);
+        }
     },);
 
     async function isMetaMaskConnected() {

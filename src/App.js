@@ -17,6 +17,11 @@ var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
 
+var HeroLendingJson = require("./build/contracts/HeroLending.json");
+var HeroLendingABI = HeroLendingJson["abi"];
+var HeroLendingAddress = HeroLendingJson["networks"]["2"]["address"];
+var HeroLendingContract = new web3.eth.Contract(HeroLendingABI, HeroLendingAddress);
+
 function App() {
     const [Address, setAddress] = useState(null);
     const [currentBalance, setCurrentBalance] = useState(null);
@@ -37,7 +42,7 @@ function App() {
     async function mintToken() {
         let exp = new BN(10, 10).pow(new BN(18, 10));
         let value = new BN(1000).mul(exp);
-        TokenContract.methods.mint().send({from: Address, value: value}).on("transactionHash", function(hash) {
+        TokenContract.methods.mint(Address, value).send({from: Address}).on("transactionHash", function(hash) {
             ShowPending()
         }).on("receipt", function(receipt) {
             ClosePending()
@@ -54,14 +59,26 @@ function App() {
         return currentPrice
     }
 
+    async function requestBalance(address) {
+        let balance;
+        try {
+            balance = await TokenContract.methods.balanceOf(address).call()
+        } catch (error) {
+            console.error(error);
+        }
+        setCurrentBalance(balance/(10**18));
+    }
+
     return(
         <div>
             <Header 
                 Address={Address}
                 setAddress={setAddress}
                 currentBalance={currentBalance}
-                mintNft={mintNFT}
+                mintNFT={mintNFT}
                 mintToken={mintToken}
+
+                requestBalance={requestBalance}
 
                 showToast={showToast}
                 ShowPending={ShowPending}
@@ -70,6 +87,14 @@ function App() {
             <HeroLending 
                 Address={Address}
                 currentBalance={currentBalance}
+
+                TokenContract={TokenContract}
+                TreeContract={TreeContract}
+                HeroLendingContract={HeroLendingContract}
+                HeroLendingAddress={HeroLendingAddress}
+
+                ShowPending={ShowPending}
+                ClosePending={ClosePending}
             />
         </div>
     )
