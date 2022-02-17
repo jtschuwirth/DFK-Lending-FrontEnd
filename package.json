@@ -1,0 +1,32 @@
+{
+  "name": "dfk-lending-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtschuwirth/DFK-Lending-FrontEnd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jtschuwirth/DFK-Lending-FrontEnd/issues"
+  },
+  "homepage": "https://github.com/jtschuwirth/DFK-Lending-FrontEnd#readme",
+  "dependencies": {
+    "@babel/core": "^7.17.4",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babelify": "^10.0.0",
+    "bootstrap": "^5.1.3",
+    "browserify": "^17.0.0",
+    "fs": "0.0.1-security",
+    "gulp": "^4.0.2",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.1.2"
+  }
+}
