@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Components/Header";
 import HeroLending from "./Components/HeroLending";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 const ethereum = window.ethereum;
 const Web3 = require('web3');
@@ -25,10 +27,21 @@ var HeroLendingContract = new web3.eth.Contract(HeroLendingABI, HeroLendingAddre
 function App() {
     const [Address, setAddress] = useState(null);
     const [currentBalance, setCurrentBalance] = useState(null);
+    const [currentChain, setCurrentChain] = useState(null);
+    const [OwnedHeros, setOwnedHeros] = useState([]);
     const [showToast, setShowToast] = useState(false);
 
     const ShowPending = () => setShowToast(true);
     const ClosePending = () => setShowToast(false);
+
+    useEffect(() => {
+        ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
+            setCurrentChain(chainId);
+        });
+        ethereum.on('chainChanged', (_chainId) => window.location.reload());
+        ethereum.on('accountsChanged', () => window.location.reload());
+        // eslint-disable-next-line
+    },[Address]);
 
     async function mintNFT() {
         let value = await requestCurrentPrice()
@@ -36,6 +49,7 @@ function App() {
             ShowPending()
         }).on("receipt", function(receipt) {
             ClosePending()
+            requestHeros();
         });
     }
 
@@ -69,7 +83,20 @@ function App() {
         setCurrentBalance(balance/(10**18));
     }
 
-    return(
+    async function requestHeros() {
+        let ownedHeros = [];
+        let herosQuantity = await TreeContract.methods.treesQuantity().call()
+        for (let i=0; i<herosQuantity; i++) {
+            let owner = await TreeContract.methods.ownerOf(i).call()
+            if (owner.toLowerCase() == Address) {
+                ownedHeros.push(i)
+            }
+        }
+        setOwnedHeros(ownedHeros);
+    }
+
+    if (currentChain === "0x6357d2e0") {
+        return(
         <div>
             <Header 
                 Address={Address}
@@ -87,17 +114,29 @@ function App() {
             <HeroLending 
                 Address={Address}
                 currentBalance={currentBalance}
+                OwnedHeros={OwnedHeros}
 
                 TokenContract={TokenContract}
                 TreeContract={TreeContract}
                 HeroLendingContract={HeroLendingContract}
                 HeroLendingAddress={HeroLendingAddress}
 
+                requestHeros={requestHeros}
                 ShowPending={ShowPending}
                 ClosePending={ClosePending}
             />
         </div>
-    )
+        )
+    } else {
+        return (
+            <Container>
+            <Row style={{height: "80px"}}></Row>
+            <Row>
+                <h1 className="d-flex justify-content-center">Connect to the Harmony Testnet</h1>
+            </Row>
+            </Container>
+        )
+    }
 }
 
 export default App;
