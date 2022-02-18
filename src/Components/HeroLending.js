@@ -59,16 +59,6 @@ function HeroLending(props) {
         setBorrowingOffers(borrowingOffers);
     }
 
-    async function approveMarketplaceSpending() {
-        let max = 1000000000
-        let exp = new BN(10, 10).pow(new BN(18, 10));
-        let value = new BN(max).mul(exp);
-        props.TokenContract.methods.approve(props.HeroLendingAddress, value).send({from: props.Address}).on("transactionHash", function(hash) {
-            props.ShowPending()
-        }).on('receipt', function(receipt) {
-            props.ClosePending()
-        })
-    }
 
     async function createOffer(heroId, liquidation, fee) {
         let exp = new BN(10, 10).pow(new BN(18, 10));
@@ -159,8 +149,11 @@ function HeroLending(props) {
 
     return(
         <Container>
+
             <Row style={{height: "80px"}}></Row>
+
             <Row>Protocol Balance: {PBalance}</Row>
+
             <Row>
             <Card bg="light" text="dark">
             <Card.Header><h1 className="d-flex justify-content-center">Create Offer</h1></Card.Header>
@@ -186,8 +179,6 @@ function HeroLending(props) {
             </Card>
             </Row>
 
-            <Row><Button variant="success" onClick={() => approveMarketplaceSpending()}>Approve Token spending on Market</Button></Row>
-            
             <Row>
             <Card>
             <Card.Body>
@@ -234,6 +225,7 @@ function HeroLending(props) {
             </Card.Body>
             </Card>
             </Row>
+
         </Container>
     )
 }

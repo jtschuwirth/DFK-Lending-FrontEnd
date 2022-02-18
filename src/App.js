@@ -104,8 +104,10 @@ function App() {
                 currentBalance={currentBalance}
                 mintNFT={mintNFT}
                 mintToken={mintToken}
-
                 requestBalance={requestBalance}
+
+                TokenContract={TokenContract}
+                HeroLendingAddress={HeroLendingAddress}
 
                 showToast={showToast}
                 ShowPending={ShowPending}
@@ -115,13 +117,13 @@ function App() {
                 Address={Address}
                 currentBalance={currentBalance}
                 OwnedHeros={OwnedHeros}
+                requestHeros={requestHeros}
 
                 TokenContract={TokenContract}
                 TreeContract={TreeContract}
                 HeroLendingContract={HeroLendingContract}
                 HeroLendingAddress={HeroLendingAddress}
 
-                requestHeros={requestHeros}
                 ShowPending={ShowPending}
                 ClosePending={ClosePending}
             />
