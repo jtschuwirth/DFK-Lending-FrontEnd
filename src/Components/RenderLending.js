@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 
@@ -100,14 +99,11 @@ function RenderLending(props) {
             <Accordion.Item eventKey={props.data}>
             <Accordion.Header>
             <Container>
-                <Row>
-                    <Col><Row>Offer Id: {props.data}</Row></Col>
-                    <Col><Row>hero Id: {OfferData.heroId}</Row></Col>
-                    <Col>Liquidation: {OfferData.liquidation/10**18}</Col>
-                    <Col>Daily Fee: {OfferData.fee/10**18}</Col>
-                    <Col>Owner: {address(OfferData.owner)}</Col>
-                    <Col>Status: {OfferData.status}</Col>
-                </Row>
+                <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
+                <Row><Col>Hero Id: {OfferData.heroId}</Col><Col></Col></Row>
+                <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col></Col></Row>
+                <Row><Col>Daily Fee: {OfferData.fee/10**18}</Col><Col></Col></Row>
+                <Row><Col>Owner: {address(OfferData.owner)}</Col><Col></Col></Row>
             </Container>
             </Accordion.Header>
 
@@ -123,22 +119,12 @@ function RenderLending(props) {
             <Accordion.Item eventKey={props.data}>
             <Accordion.Header>
             <Container>
-                <Row>
-                    <Col><Row>Offer Id: {props.data}</Row></Col>
-                    <Col><Row>hero Id: {OfferData.heroId}</Row></Col>
-                    <Col>Liquidation: {OfferData.liquidation/10**18}</Col>
-                    <Col>Daily Fee: {OfferData.fee/10**18}</Col>
-                    <Col>Owner: {address(OfferData.owner)}</Col>
-                    <Col>Status: {OfferData.status}</Col>
-                </Row>
-                <Row>
-                    <Col><Row>{new Date(parseInt(OfferData.time)*1000).toLocaleTimeString("en-US")}-{new Date(parseInt(OfferData.time)*1000).toLocaleDateString("en-US")}</Row></Col>
-                    <Col><Row></Row></Col>
-                    <Col>Collateral: {OfferData.collateral/10**18}</Col>
-                    <Col>Accumulated Fee: {accumulatedFee()}</Col>
-                    <Col>Borrower: {address(OfferData.borrower)}</Col>
-                    <Col></Col>
-                </Row>
+                <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
+                <Row><Col>Hero Id: {OfferData.heroId}</Col><Col></Col></Row>
+                <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
+                <Row><Col>Daily Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {accumulatedFee()}</Col></Row>
+                <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
+                <Row><Col>Time to Liquidation:</Col><Col></Col></Row>
             </Container>
             </Accordion.Header>
 

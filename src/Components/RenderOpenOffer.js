@@ -92,7 +92,7 @@ function RenderOpenOffer(props) {
             <Form.Label>Collateral</Form.Label>
             <Form.Control placeholder="Enter amount"/>
         </Form.Group>
-        <Col><Row><Button variant="success" type="submit">Rent</Button></Row></Col>
+        <Col><Row><Button variant="success" type="submit">Borrow</Button></Row></Col>
         </Form>
     </Accordion.Body>
     </Accordion.Item>
