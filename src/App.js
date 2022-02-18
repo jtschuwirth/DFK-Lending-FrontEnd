@@ -98,6 +98,13 @@ function App() {
     if (currentChain === "0x6357d2e0") {
         return(
         <div >
+            <style type="text/css">
+                {`
+                .accordion-item {
+                    border: 1px solid green;
+                }
+                `}
+                </style>
             <Header 
                 Address={Address}
                 setAddress={setAddress}

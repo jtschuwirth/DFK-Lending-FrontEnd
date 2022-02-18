@@ -152,7 +152,7 @@ function HeroLending(props) {
 
             <Row style={{height: "80px"}}></Row>
 
-            <Card bg="light" text="dark">
+            <Card border="success" bg="light" text="dark">
             <Card.Header><h1 className="d-flex justify-content-center">Create Offer</h1></Card.Header>
             <Card.Body>
             <Form onSubmit={handleSubmit}>
@@ -179,7 +179,7 @@ function HeroLending(props) {
 
             <Row>
             <Col>
-            <Card bg="light" text="dark">
+            <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Lends</h1></Card.Header>
             <Accordion >
@@ -195,7 +195,7 @@ function HeroLending(props) {
             </Col>
 
             <Col>
-            <Card bg="light" text="dark">
+            <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Borrows</h1></Card.Header>
             <Accordion >
@@ -213,7 +213,7 @@ function HeroLending(props) {
 
             <Row style={{height: "80px"}}></Row>
 
-            <Card bg="light" text="dark">
+            <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Open Offers</h1></Card.Header>
             <Accordion >
