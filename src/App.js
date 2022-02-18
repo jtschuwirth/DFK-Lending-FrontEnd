@@ -26,7 +26,7 @@ var HeroLendingContract = new web3.eth.Contract(HeroLendingABI, HeroLendingAddre
 
 function App() {
     const [Address, setAddress] = useState(null);
-    const [currentBalance, setCurrentBalance] = useState(null);
+    const [currentBalance, setCurrentBalance] = useState(0);
     const [currentChain, setCurrentChain] = useState(null);
     const [OwnedHeros, setOwnedHeros] = useState([]);
     const [showToast, setShowToast] = useState(false);

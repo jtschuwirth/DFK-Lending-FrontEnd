@@ -152,8 +152,6 @@ function HeroLending(props) {
 
             <Row style={{height: "80px"}}></Row>
 
-            <Row>Protocol Balance: {PBalance}</Row>
-
             <Row>
             <Card bg="light" text="dark">
             <Card.Header><h1 className="d-flex justify-content-center">Create Offer</h1></Card.Header>
@@ -180,7 +178,7 @@ function HeroLending(props) {
             </Row>
 
             <Row>
-            <Card>
+            <Card bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Lends</h1></Card.Header>
             <Accordion >
@@ -196,7 +194,7 @@ function HeroLending(props) {
             </Row>
 
             <Row>
-            <Card>
+            <Card bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Borrows</h1></Card.Header>
             <Accordion >
@@ -212,7 +210,7 @@ function HeroLending(props) {
             </Row>
 
             <Row>
-            <Card>
+            <Card bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Open Offers</h1></Card.Header>
             <Accordion >

@@ -62,7 +62,6 @@ function Header(props) {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" >
         <Nav className="me-auto" >
-            <Button variant="success" onClick={() => approveMarketplaceSpending()}>Approve Market</Button>
             <Nav.Link onClick={() => props.mintNFT()}>Mint NFT</Nav.Link>
             <Nav.Link onClick={() => props.mintToken()}>Mint Token</Nav.Link>
         </Nav>
@@ -75,7 +74,8 @@ function Header(props) {
             </Toast>
             </Col>
         </ToastContainer>
-        <Button variant="success">Token Balance: {props.currentBalance}</Button>
+        <Button variant="success" onClick={() => approveMarketplaceSpending()}>Approve Market</Button>
+        <Button variant="success">Token Balance: {props.currentBalance.toFixed(2)}</Button>
         <Button variant="dark" onClick={() => connectMetaMask()}><Wallet Address={props.Address}/></Button>
     </Navbar.Collapse>
     </Container>
