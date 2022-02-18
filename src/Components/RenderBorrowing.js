@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Accordion from "react-bootstrap/Accordion";
 
 function RenderBorrowing(props) {
     const [OfferData, setOfferData] = useState([]);
@@ -101,8 +102,9 @@ function RenderBorrowing(props) {
     };
 
     return (
-    <Card>
-    <Container>
+    <Accordion.Item eventKey={props.data}>
+    <Accordion.Header>
+        <Container>
         <Row>
             <Col><Row>Offer Id: {props.data}</Row></Col>
             <Col><Row>hero Id: {OfferData.heroId}</Row></Col>
@@ -119,6 +121,9 @@ function RenderBorrowing(props) {
             <Col>Borrower: {address(OfferData.borrower)}</Col>
             <Col></Col>
         </Row>
+        </Container>
+    </Accordion.Header>
+    <Accordion.Body>
         <Row>
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formCollateral">
@@ -130,10 +135,9 @@ function RenderBorrowing(props) {
         <Col><Row><Button variant="success" type="submit">Add Collateral</Button></Row></Col>
         </Row>
         </Form>
-        <Row style={{height: "10px"}}></Row>
         </Row>
-    </Container>
-    </Card>
+    </Accordion.Body>
+    </Accordion.Item>
     )
 }
 

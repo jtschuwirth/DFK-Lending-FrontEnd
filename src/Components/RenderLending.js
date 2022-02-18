@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Accordion from "react-bootstrap/Accordion";
 
 function RenderLending(props) {
     const [OfferData, setOfferData] = useState([]);
@@ -96,7 +97,8 @@ function RenderLending(props) {
 
     if (OfferData.status == "Open") {
         return (
-            <Card >
+            <Accordion.Item eventKey={props.data}>
+            <Accordion.Header>
             <Container>
                 <Row>
                     <Col><Row>Offer Id: {props.data}</Row></Col>
@@ -106,16 +108,20 @@ function RenderLending(props) {
                     <Col>Owner: {address(OfferData.owner)}</Col>
                     <Col>Status: {OfferData.status}</Col>
                 </Row>
-                <Row>
-                    <Col><Row><Button variant="success" onClick={() => props.cancelOffer(props.data)}>Cancel</Button></Row></Col>
-                <Row style={{height: "10px"}}></Row>
-                </Row>
             </Container>
-            </Card>
+            </Accordion.Header>
+
+            <Accordion.Body>
+                <Row><Button variant="success" onClick={() => props.cancelOffer(props.data)}>Cancel</Button></Row>
+                <Row style={{height: "10px"}}></Row>
+            </Accordion.Body>
+            </Accordion.Item>
+
     )
     } else {
         return (
-            <Card >
+            <Accordion.Item eventKey={props.data}>
+            <Accordion.Header>
             <Container>
                 <Row>
                     <Col><Row>Offer Id: {props.data}</Row></Col>
@@ -133,12 +139,13 @@ function RenderLending(props) {
                     <Col>Borrower: {address(OfferData.borrower)}</Col>
                     <Col></Col>
                 </Row>
-                <Row>
-                    <Col><Row><Button variant="success" onClick={() => props.liquidate(props.data)}>Liquidate</Button></Row></Col>
-                <Row style={{height: "10px"}}></Row>
-                </Row>
             </Container>
-            </Card>
+            </Accordion.Header>
+
+            <Accordion.Body>
+                <Row><Button variant="success" onClick={() => props.liquidate(props.data)}>Liquidate</Button></Row>
+            </Accordion.Body>
+            </Accordion.Item>
         )
     }
 }

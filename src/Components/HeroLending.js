@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Accordion from "react-bootstrap/Accordion";
 
 import RenderLending from "./RenderLending";
 import RenderBorrowing from "./RenderBorrowing";
@@ -161,57 +162,77 @@ function HeroLending(props) {
             <Row style={{height: "80px"}}></Row>
             <Row>Protocol Balance: {PBalance}</Row>
             <Row>
-            <Card fluid bg="dark" text="light">
+            <Card bg="light" text="dark">
+            <Card.Header><h1 className="d-flex justify-content-center">Create Offer</h1></Card.Header>
             <Card.Body>
-            <Card.Title><div className="d-flex justify-content-center"><h1 className="font-link">Create Offer</h1></div></Card.Title>
-        
-        <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formHero">
-        <Form.Select aria-label="Default select example">
-        <option>Select HeroId</option>
-        {props.OwnedHeros.map((_) => <RenderHero heroId={_}/>)}
-        </Form.Select>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formLiquidation">
-            <Form.Label>Liquidation</Form.Label>
-            <Form.Control placeholder="Enter amount" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formFee">
-            <Form.Label>Daily Fee</Form.Label>
-            <Form.Control placeholder="Enter amount"/>
-        </Form.Group>
-        <Button variant="success" type="submit">Approve Hero and Create Offer</Button>
-        </Form>
-    
+            <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formHero">
+            <Form.Select aria-label="Default select example">
+                <option>Select HeroId</option>
+                {props.OwnedHeros.map((_) => <RenderHero heroId={_}/>)}
+            </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formLiquidation">
+                <Form.Label>Liquidation</Form.Label>
+                <Form.Control placeholder="Enter amount" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formFee">
+                    <Form.Label>Daily Fee</Form.Label>
+                    <Form.Control placeholder="Enter amount"/>
+            </Form.Group>
+            <Button variant="success" type="submit">Approve Hero and Create Offer</Button>
+            </Form>
             </Card.Body>
             </Card>
             </Row>
+
             <Row><Button variant="success" onClick={() => approveMarketplaceSpending()}>Approve Token spending on Market</Button></Row>
-            <Row><div className="d-flex justify-content-center"><h1 className="font-link">Your Lendings</h1></div></Row>
+            
             <Row>
+            <Card>
+            <Card.Body>
+            <Card.Header><h1 className="d-flex justify-content-center">Your Lends</h1></Card.Header>
+            <Accordion >
                 {LendingOffers.map((_) => <RenderLending
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
                     cancelOffer={cancelOffer}
                     liquidate={liquidate}
                     />)}
+            </Accordion>
+            </Card.Body>
+            </Card>
             </Row>
-            <Row><div className="d-flex justify-content-center"><h1 className="font-link">Your Borrowings</h1></div></Row>
+
             <Row>
+            <Card>
+            <Card.Body>
+            <Card.Header><h1 className="d-flex justify-content-center">Your Borrows</h1></Card.Header>
+            <Accordion >
                 {BorrowingOffers.map((_) => <RenderBorrowing 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
                     repayOffer={repayOffer}
                     addCollateral={addCollateral}
                     />)}
+            </Accordion>
+            </Card.Body>
+            </Card>
             </Row>
-            <Row><div className="d-flex justify-content-center"><h1 className="font-link">Open Offers</h1></div></Row>
+
             <Row>
+            <Card>
+            <Card.Body>
+            <Card.Header><h1 className="d-flex justify-content-center">Open Offers</h1></Card.Header>
+            <Accordion >
                 {OpenOffers.map((_) => <RenderOpenOffer 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
                     acceptOffer={acceptOffer}
                     />)}
+            </Accordion>
+            </Card.Body>
+            </Card>
             </Row>
         </Container>
     )

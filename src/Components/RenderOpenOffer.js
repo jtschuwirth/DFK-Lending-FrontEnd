@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Accordion from "react-bootstrap/Accordion";
 
 function RenderOpenOffer(props) {
     const [OfferData, setOfferData] = useState([]);
@@ -71,7 +72,8 @@ function RenderOpenOffer(props) {
     };
 
     return (
-    <Card>
+    <Accordion.Item eventKey={props.data}>
+    <Accordion.Header>
     <Container>
         <Row>
             <Col><Row>Offer Id: {props.data}</Row></Col>
@@ -81,7 +83,10 @@ function RenderOpenOffer(props) {
             <Col>Owner: {owner(OfferData.owner)}</Col>
             <Col>Status: {OfferData.status}</Col>
         </Row>
-        <Row>
+    </Container>
+    </Accordion.Header>
+    
+    <Accordion.Body>
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formCollateral">
             <Form.Label>Collateral</Form.Label>
@@ -89,10 +94,8 @@ function RenderOpenOffer(props) {
         </Form.Group>
         <Col><Row><Button variant="success" type="submit">Rent</Button></Row></Col>
         </Form>
-        <Row style={{height: "10px"}}></Row>
-        </Row>
-    </Container>
-    </Card>
+    </Accordion.Body>
+    </Accordion.Item>
     )
 }
 
