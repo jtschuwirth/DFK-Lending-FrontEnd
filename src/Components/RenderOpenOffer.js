@@ -21,42 +21,17 @@ function RenderOpenOffer(props) {
     }
 
     async function requestOfferData(id) {
-        let owner;
-        let heroId;
-        let liquidation;
-        let fee;
-        let status;
-        try {
-            owner = await props.HeroLendingContract.methods.offerOwner(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            heroId = await props.HeroLendingContract.methods.offerHeroId(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            liquidation = await props.HeroLendingContract.methods.offerLiquidation(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            fee = await props.HeroLendingContract.methods.offerDailyFee(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            status = await props.HeroLendingContract.methods.offerStatus(id).call()
-        } catch (error) {
-            console.error(error);
-        }
+        let offer = await props.HeroLendingContract.methods.getOffer(id).call();
         return {
-            owner: owner, 
-            heroId: heroId, 
-            liquidation: liquidation, 
-            fee: fee,
-            status: status}
+            owner: offer[0],
+            nft: offer[1],
+            nftId: offer[2], 
+            liquidation: offer[3], 
+            fee: offer[4],
+            borrower: offer[5],
+            collateral: offer[6],
+            time: offer[7],
+            status: offer[8]}
     }
 
     function owner(address) {
@@ -77,7 +52,7 @@ function RenderOpenOffer(props) {
     <Container>
         <Row>
             <Col><Row>Offer Id: {props.data}</Row></Col>
-            <Col><Row>hero Id: {OfferData.heroId}</Row></Col>
+            <Col><Row>nft Id: {OfferData.nftId}</Row></Col>
             <Col>Liquidation: {OfferData.liquidation/10**18}</Col>
             <Col>Daily Fee: {OfferData.fee/10**18}</Col>
             <Col>Owner: {owner(OfferData.owner)}</Col>

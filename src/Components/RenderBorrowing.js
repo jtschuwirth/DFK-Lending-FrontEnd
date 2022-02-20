@@ -21,64 +21,17 @@ function RenderBorrowing(props) {
     }
 
     async function requestOfferData(id) {
-        let owner;
-        let heroId;
-        let liquidation;
-        let fee;
-        let status;
-        let collateral;
-        let borrower;
-        let time;
-        try {
-            owner = await props.HeroLendingContract.methods.offerOwner(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            heroId = await props.HeroLendingContract.methods.offerHeroId(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            liquidation = await props.HeroLendingContract.methods.offerLiquidation(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            fee = await props.HeroLendingContract.methods.offerDailyFee(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            status = await props.HeroLendingContract.methods.offerStatus(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-
-        try {
-            collateral = await props.HeroLendingContract.methods.offerCollateral(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            borrower = await props.HeroLendingContract.methods.offerBorrower(id).call()
-        } catch (error) {
-            console.error(error);
-        }
-        try {
-            time = await props.HeroLendingContract.methods.offerAcceptTime(id).call()
-        } catch (error) {
-            console.error(error);
-        }
+        let offer = await props.HeroLendingContract.methods.getOffer(id).call();
         return {
-            owner: owner, 
-            heroId: heroId, 
-            liquidation: liquidation, 
-            fee: fee,
-            status: status,
-            collateral: collateral,
-            borrower: borrower,
-            time: time}
+            owner: offer[0],
+            nft: offer[1],
+            nftId: offer[2], 
+            liquidation: offer[3], 
+            fee: offer[4],
+            borrower: offer[5],
+            collateral: offer[6],
+            time: offer[7],
+            status: offer[8]}
     }
 
     function address(address) {
@@ -90,10 +43,14 @@ function RenderBorrowing(props) {
 
     function accumulatedFee() {
         if (((Date.now() - parseInt(OfferData.time)*1000)/1000 < 60*60)) {
-            return ((OfferData.fee/24)/10**18).toFixed(2)
+            return ((parseInt(OfferData.fee)/24)/10**18).toFixed(2)
         } else {
-            return (((((Date.now() - (parseInt(OfferData.time)*1000))/1000)/(60*60*24))*OfferData.fee)/10**18).toFixed(2)
+            return (((((Date.now() - (parseInt(OfferData.time)*1000))/1000)/(60*60*24))*parseInt(OfferData.fee))/10**18).toFixed(2)
         }
+    }
+
+    function liquidationDate() {
+        return new Date((parseInt(OfferData.time) + ((parseInt(OfferData.collateral) - parseInt(OfferData.liquidation))/parseInt(OfferData.fee))*60*60*24)*1000).toLocaleDateString("en-US");
     }
 
     const handleSubmit = (event) => {
@@ -106,11 +63,11 @@ function RenderBorrowing(props) {
     <Accordion.Header>
         <Container>
             <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
-            <Row><Col>Hero Id: {OfferData.heroId}</Col><Col></Col></Row>
+            <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
             <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
             <Row><Col>Daily Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {accumulatedFee()}</Col></Row>
             <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
-            <Row><Col>Time to Liquidation:</Col><Col></Col></Row>
+            <Row><Col>Liquidation date: {liquidationDate()}</Col><Col></Col></Row>
         </Container>
     </Accordion.Header>
     <Accordion.Body>
@@ -121,7 +78,7 @@ function RenderBorrowing(props) {
             <Form.Control placeholder="Enter amount"/>
         </Form.Group>
         <Row>
-        <Col><Row><Button variant="success" onClick={() => props.repayOffer(props.data, OfferData.heroId)}>Approve Hero and Pay Back</Button></Row></Col>
+        <Col><Row><Button variant="success" onClick={() => props.repayOffer(props.data, OfferData.nftId)}>Approve Hero and Pay Back</Button></Row></Col>
         <Col><Row><Button variant="success" type="submit">Add Collateral</Button></Row></Col>
         </Row>
         </Form>

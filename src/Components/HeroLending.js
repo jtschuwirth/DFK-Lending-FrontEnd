@@ -40,11 +40,12 @@ function HeroLending(props) {
         let openOffers = [];
         let borrowingOffers = [];
         let lendingOffers = [];
-        let offersQuantity = await props.HeroLendingContract.methods.offersQuantity().call();
-        for (let i=0; i<offersQuantity; i++) {
-            let status = await props.HeroLendingContract.methods.offerStatus(i).call();
-            let borrower = await props.HeroLendingContract.methods.offerBorrower(i).call();
-            let owner = await props.HeroLendingContract.methods.offerOwner(i).call();
+        let offersQuantity = await props.HeroLendingContract.methods.getOfferQuantities().call();
+        for (let i=1; i<=offersQuantity; i++) {
+            let offer = await props.HeroLendingContract.methods.getOffer(i).call();
+            let owner = offer[0];
+            let borrower = offer[5]
+            let status = offer[8];
             if (owner.toLowerCase() == props.Address && status != "Cancelled") {
                 lendingOffers.push(i)
             }
@@ -64,7 +65,7 @@ function HeroLending(props) {
         let exp = new BN(10, 10).pow(new BN(18, 10));
         let BNLiquidation = new BN(liquidation).mul(exp);
         let BNFee = new BN(fee).mul(exp);
-        props.HeroLendingContract.methods.createOffer(heroId, BNLiquidation, BNFee).send({from: props.Address}).on("transactionHash", function(hash) {
+        props.HeroLendingContract.methods.createOffer(heroId, props.TreeAddress, BNLiquidation, BNFee).send({from: props.Address}).on("transactionHash", function(hash) {
             props.ShowPending()
         }).on('receipt', function(receipt) {
             props.ClosePending()

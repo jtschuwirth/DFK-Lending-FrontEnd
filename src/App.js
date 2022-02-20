@@ -19,7 +19,7 @@ var TokenABI = TokenJson["abi"];
 var TokenAddress = TokenJson["networks"]["2"]["address"];
 var TokenContract = new web3.eth.Contract(TokenABI, TokenAddress);
 
-var HeroLendingJson = require("./build/contracts/HeroLending.json");
+var HeroLendingJson = require("./build/contracts/ERC721Lending.json");
 var HeroLendingABI = HeroLendingJson["abi"];
 var HeroLendingAddress = HeroLendingJson["networks"]["2"]["address"];
 var HeroLendingContract = new web3.eth.Contract(HeroLendingABI, HeroLendingAddress);
@@ -128,6 +128,7 @@ function App() {
 
                 TokenContract={TokenContract}
                 TreeContract={TreeContract}
+                TreeAddress={TreeAddress}
                 HeroLendingContract={HeroLendingContract}
                 HeroLendingAddress={HeroLendingAddress}
 
