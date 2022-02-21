@@ -62,10 +62,9 @@ function HeroLending(props) {
 
 
     async function createOffer(heroId, liquidation, fee) {
-        let exp = new BN(10, 10).pow(new BN(18, 10));
-        let BNLiquidation = new BN(liquidation).mul(exp);
-        let BNFee = new BN(fee).mul(exp);
-        props.HeroLendingContract.methods.createOffer(heroId, props.TreeAddress, BNLiquidation, BNFee).send({from: props.Address}).on("transactionHash", function(hash) {
+        let liquidationWei = web3.utils.toWei(liquidation);
+        let feeWei = web3.utils.toWei(fee);
+        props.HeroLendingContract.methods.createOffer(heroId, props.TreeAddress, liquidationWei, feeWei).send({from: props.Address}).on("transactionHash", function(hash) {
             props.ShowPending()
         }).on('receipt', function(receipt) {
             props.ClosePending()
@@ -85,9 +84,8 @@ function HeroLending(props) {
     }
 
     async function acceptOffer(offerId, collateral) {
-        let exp = new BN(10, 10).pow(new BN(18, 10));
-        let BNCollateral = new BN(collateral).mul(exp);
-        props.HeroLendingContract.methods.acceptOffer(offerId, BNCollateral).send({from: props.Address}).on("transactionHash", function(hash) {
+        let collateralWei = web3.utils.toWei(collateral);
+        props.HeroLendingContract.methods.acceptOffer(offerId, collateralWei).send({from: props.Address}).on("transactionHash", function(hash) {
             props.ShowPending()
         }).on('receipt', function(receipt) {
             props.ClosePending()
@@ -113,9 +111,8 @@ function HeroLending(props) {
     }
 
     async function addCollateral(offerId, collateral) {
-        let exp = new BN(10, 10).pow(new BN(18, 10));
-        let BNCollateral = new BN(collateral).mul(exp);
-        props.HeroLendingContract.methods.addCollateral(offerId, BNCollateral).send({from: props.Address}).on("transactionHash", function(hash) {
+        let collateralWei = web3.utils.toWei(collateral);
+        props.HeroLendingContract.methods.addCollateral(offerId, collateralWei).send({from: props.Address}).on("transactionHash", function(hash) {
             props.ShowPending()
         }).on('receipt', function(receipt) {
             props.ClosePending()

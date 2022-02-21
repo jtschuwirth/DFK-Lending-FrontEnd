@@ -20,6 +20,7 @@ function RenderLending(props) {
 
     async function requestOfferData(id) {
         let offer = await props.HeroLendingContract.methods.getOffer(id).call();
+        let feeToPay = await props.HeroLendingContract.methods.feeToPay(id).call();
         return {
             owner: offer[0],
             nft: offer[1],
@@ -29,21 +30,15 @@ function RenderLending(props) {
             borrower: offer[5],
             collateral: offer[6],
             time: offer[7],
-            status: offer[8]}
+            status: offer[8],
+            feeToPay: feeToPay
+        }
     }
 
     function address(address) {
         // eslint-disable-next-line
         if (address != undefined) {
             return address.substring(0,4)+"..."+address.slice(-4)
-        }
-    }
-
-    function accumulatedFee() {
-        if (((Date.now() - parseInt(OfferData.time)*1000)/1000 < 60*60)) {
-            return ((OfferData.fee)/10**18).toFixed(2)
-        } else {
-            return ((Math.floor(((Date.now() - (parseInt(OfferData.time)*1000))/1000)/(60*60))*parseInt(OfferData.fee))/10**18).toFixed(2)
         }
     }
 
@@ -79,7 +74,7 @@ function RenderLending(props) {
                 <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
                 <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
                 <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
-                <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {accumulatedFee()}</Col></Row>
+                <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {OfferData.feeToPay/10**18}</Col></Row>
                 <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
                 <Row><Col>Liquidation date: {liquidationDate()}</Col><Col></Col></Row>
             </Container>
