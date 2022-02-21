@@ -41,10 +41,14 @@ function RenderLending(props) {
 
     function accumulatedFee() {
         if (((Date.now() - parseInt(OfferData.time)*1000)/1000 < 60*60)) {
-            return ((OfferData.fee/24)/10**18).toFixed(2)
+            return ((OfferData.fee)/10**18).toFixed(2)
         } else {
-            return (((((Date.now() - (parseInt(OfferData.time)*1000))/1000)/(60*60*24))*OfferData.fee)/10**18).toFixed(2)
+            return ((Math.floor(((Date.now() - (parseInt(OfferData.time)*1000))/1000)/(60*60))*parseInt(OfferData.fee))/10**18).toFixed(2)
         }
+    }
+
+    function liquidationDate() {
+        return new Date((parseInt(OfferData.time) + ((parseInt(OfferData.collateral) - parseInt(OfferData.liquidation))/parseInt(OfferData.fee))*60*60)*1000).toLocaleDateString("en-US");
     }
 
     if (OfferData.status == "Open") {
@@ -55,7 +59,7 @@ function RenderLending(props) {
                 <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
                 <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
                 <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col></Col></Row>
-                <Row><Col>Daily Fee: {OfferData.fee/10**18}</Col><Col></Col></Row>
+                <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col></Col></Row>
                 <Row><Col>Owner: {address(OfferData.owner)}</Col><Col></Col></Row>
             </Container>
             </Accordion.Header>
@@ -75,9 +79,9 @@ function RenderLending(props) {
                 <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
                 <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
                 <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
-                <Row><Col>Daily Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {accumulatedFee()}</Col></Row>
+                <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {accumulatedFee()}</Col></Row>
                 <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
-                <Row><Col>Time to Liquidation:</Col><Col></Col></Row>
+                <Row><Col>Liquidation date: {liquidationDate()}</Col><Col></Col></Row>
             </Container>
             </Accordion.Header>
 

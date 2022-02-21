@@ -54,7 +54,7 @@ function RenderOpenOffer(props) {
             <Col><Row>Offer Id: {props.data}</Row></Col>
             <Col><Row>nft Id: {OfferData.nftId}</Row></Col>
             <Col>Liquidation: {OfferData.liquidation/10**18}</Col>
-            <Col>Daily Fee: {OfferData.fee/10**18}</Col>
+            <Col>Hourly Fee: {OfferData.fee/10**18}</Col>
             <Col>Owner: {owner(OfferData.owner)}</Col>
             <Col>Status: {OfferData.status}</Col>
         </Row>

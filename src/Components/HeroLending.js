@@ -168,7 +168,7 @@ function HeroLending(props) {
                 <Form.Control placeholder="Enter amount" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formFee">
-                    <Form.Label>Daily Fee</Form.Label>
+                    <Form.Label>Hourly Fee</Form.Label>
                     <Form.Control placeholder="Enter amount"/>
             </Form.Group>
             <Button variant="success" type="submit">Approve Hero and Create Offer</Button>
@@ -226,6 +226,8 @@ function HeroLending(props) {
             </Accordion>
             </Card.Body>
             </Card>
+
+            <Row style={{height: "80px"}}></Row>
 
         </Container>
     )
