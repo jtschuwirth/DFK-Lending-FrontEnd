@@ -30,9 +30,14 @@ function App() {
     const [currentChain, setCurrentChain] = useState(null);
     const [OwnedHeros, setOwnedHeros] = useState([]);
     const [showToast, setShowToast] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     const ShowPending = () => setShowToast(true);
     const ClosePending = () => setShowToast(false);
+
+    const OpenMenu = () => setShowMenu(true);
+    const CloseMenu = () => setShowMenu(false);
+    
 
     useEffect(() => {
         ethereum.request({ method: 'eth_chainId' }).then((chainId) => {
@@ -103,6 +108,15 @@ function App() {
                 .accordion-item {
                     border: 1px solid green;
                 }
+                .menu {
+                    z-index: 100;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    margin-right: -50%;
+                    transform: translate(-50%, -50%);
+                    display: flex;
+                }
                 `}
                 </style>
             <Header 
@@ -134,6 +148,9 @@ function App() {
 
                 ShowPending={ShowPending}
                 ClosePending={ClosePending}
+                showMenu={showMenu}
+                OpenMenu={OpenMenu}
+                CloseMenu={CloseMenu}
             />
         </div>
         )

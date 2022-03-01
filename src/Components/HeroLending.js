@@ -7,9 +7,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 
-import RenderLending from "./RenderLending";
-import RenderBorrowing from "./RenderBorrowing";
-import RenderOpenOffer from "./RenderOpenOffer";
+import RenderOffers from "./RenderOffers";
+import OfferDetail from "./OfferDetail";
 
 
 const Web3 = require('web3');
@@ -21,6 +20,8 @@ function HeroLending(props) {
     const [OpenOffers, setOpenOffers] = useState([]);
     const [BorrowingOffers, setBorrowingOffers] = useState([]);
     const [LendingOffers, setLendingOffers] = useState([]);
+    const [MenuId, setMenuId] = useState(0);
+    const [MenuType, setMenuType] = useState(null);
 
     useEffect(() => {
         if (props.Address != null) {
@@ -145,11 +146,34 @@ function HeroLending(props) {
         })
     }
 
+    function RenderHero(props) {
+        return (<option value={props.heroId}>{props.heroId}</option>)
+    }
+
+    function handleMenu(id, type) {
+        if (props.showMenu) {
+            props.CloseMenu();
+        } else {
+            setMenuId(id);
+            setMenuType(type);
+            props.OpenMenu();
+        }
+    }
+
     return(
         <Container>
-
+            <OfferDetail 
+                showMenu={props.showMenu} 
+                data={MenuId} 
+                HeroLendingContract={props.HeroLendingContract} 
+                handleMenu={handleMenu}
+                liquidate={liquidate}
+                cancelOffer={cancelOffer}
+                acceptOffer={acceptOffer}
+                addCollateral={addCollateral}
+                repayOffer={repayOffer}
+                MenuType={MenuType}/>
             <Row style={{height: "80px"}}></Row>
-
             <Card border="success" bg="light" text="dark">
             <Card.Header><h1 className="d-flex justify-content-center">Create Offer</h1></Card.Header>
             <Card.Body>
@@ -180,14 +204,12 @@ function HeroLending(props) {
             <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Lends</h1></Card.Header>
-            <Accordion >
-                {LendingOffers.map((_) => <RenderLending
+                {LendingOffers.map((_) => <RenderOffers
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
-                    cancelOffer={cancelOffer}
-                    liquidate={liquidate}
+                    handleMenu={handleMenu}
+                    type ="Lend"
                     />)}
-            </Accordion>
             </Card.Body>
             </Card>
             </Col>
@@ -197,11 +219,11 @@ function HeroLending(props) {
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Borrows</h1></Card.Header>
             <Accordion >
-                {BorrowingOffers.map((_) => <RenderBorrowing 
+                {BorrowingOffers.map((_) => <RenderOffers 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
-                    repayOffer={repayOffer}
-                    addCollateral={addCollateral}
+                    handleMenu={handleMenu}
+                    type ="Borrow"
                     />)}
             </Accordion>
             </Card.Body>
@@ -215,10 +237,11 @@ function HeroLending(props) {
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Open Offers</h1></Card.Header>
             <Accordion >
-                {OpenOffers.map((_) => <RenderOpenOffer 
+                {OpenOffers.map((_) => <RenderOffers 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
-                    acceptOffer={acceptOffer}
+                    handleMenu={handleMenu}
+                    type="Open"
                     />)}
             </Accordion>
             </Card.Body>
@@ -229,10 +252,5 @@ function HeroLending(props) {
         </Container>
     )
 }
-
-function RenderHero(props) {
-    return (<option value={props.heroId}>{props.heroId}</option>)
-}
-
 
 export default HeroLending;
