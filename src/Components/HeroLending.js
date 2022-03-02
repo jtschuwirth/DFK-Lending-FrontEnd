@@ -218,14 +218,12 @@ function HeroLending(props) {
             <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Your Borrows</h1></Card.Header>
-            <Accordion >
                 {BorrowingOffers.map((_) => <RenderOffers 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
                     handleMenu={handleMenu}
                     type ="Borrow"
                     />)}
-            </Accordion>
             </Card.Body>
             </Card>
             </Col>
@@ -236,14 +234,12 @@ function HeroLending(props) {
             <Card border="success" bg="light" text="dark">
             <Card.Body>
             <Card.Header><h1 className="d-flex justify-content-center">Open Offers</h1></Card.Header>
-            <Accordion >
                 {OpenOffers.map((_) => <RenderOffers 
                     data={_} 
                     HeroLendingContract={props.HeroLendingContract}
                     handleMenu={handleMenu}
                     type="Open"
                     />)}
-            </Accordion>
             </Card.Body>
             </Card>
 

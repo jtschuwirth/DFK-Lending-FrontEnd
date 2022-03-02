@@ -39,9 +39,11 @@ function RenderLending(props) {
         return (
             <Card>
             <Container>
-                <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Status: {OfferData.status}</Col></Row>
-                <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Hourly Fee: {OfferData.fee/10**18}</Col></Row>
-                <Row><Button variant="success" onClick={() => props.handleMenu(props.data, props.type)}>See Details</Button></Row>
+                <Row>
+                <Col><Row>Hero Id: {OfferData.nftId}</Row><Row>Liquidation: {OfferData.liquidation/10**18}</Row></Col>
+                <Col><Row>Status: {OfferData.status}</Row><Row>Hourly Fee: {OfferData.fee/10**18}</Row></Col>
+                <Col className="d-flex align-items-center"><Col className="d-flex justify-content-end"><Button variant="success" onClick={() => props.handleMenu(props.data, props.type)}>Details</Button></Col></Col>
+                </Row>
             </Container>
             </Card>
 
@@ -50,10 +52,11 @@ function RenderLending(props) {
         return (
             <Card>
             <Container>
-                <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Status: {OfferData.status}</Col></Row>
-                <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Hourly Fee: {OfferData.fee/10**18}</Col></Row>
-                <Row><Col>Collateral: {OfferData.collateral/10**18}</Col><Col>Accumulated Fee: {OfferData.feeToPay/10**18}</Col></Row>
-                <Row><Button variant="success" onClick={() => props.handleMenu(props.data, props.type)}>See Details</Button></Row>
+                <Row>
+                <Col><Row>Hero Id: {OfferData.nftId}</Row><Row>Liquidation: {OfferData.liquidation/10**18}</Row><Row>Collateral: {OfferData.collateral/10**18}</Row><Row></Row></Col>
+                <Col><Row>Status: {OfferData.status}</Row><Row>Hourly Fee: {OfferData.fee/10**18}</Row><Row>Accumulated Fee: {OfferData.feeToPay/10**18}</Row></Col>
+                <Col className="d-flex align-items-center"><Col className="d-flex justify-content-end"><Button variant="success" onClick={() => props.handleMenu(props.data, props.type)}>Details</Button></Col></Col>
+                </Row>
             </Container>
             </Card>
         )
