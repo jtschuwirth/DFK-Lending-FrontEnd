@@ -47,7 +47,7 @@ function HeroLending(props) {
             let owner = offer[0];
             let borrower = offer[5]
             let status = offer[8];
-            if (owner.toLowerCase() == props.Address && status != "Cancelled") {
+            if (owner.toLowerCase() == props.Address && status != "Cancelled" && status != "Liquidated") {
                 lendingOffers.push(i)
             }
             if (status == "Open") {

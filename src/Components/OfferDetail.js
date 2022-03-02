@@ -60,12 +60,19 @@ function OfferDetail(props) {
     function renderType() {
 
         if (props.MenuType == "Lend") {
-            return (
+            if (OfferData.status == "Open") {
+                return (
                 <Container>
                     <Row><Button variant="success" onClick={() => props.cancelOffer(props.data)}>Cancel</Button></Row>
+                </Container>
+                ) 
+            } else {
+                return (
+                <Container>
                     <Row><Button variant="success" onClick={() => props.liquidate(props.data)}>Liquidate</Button></Row>
                 </Container>
-            )
+                )
+            }
         } else if (props.MenuType == "Borrow") {
             return (
                 <Container>
@@ -101,24 +108,46 @@ function OfferDetail(props) {
     }
 
     if (props.showMenu) {
-        return (
+        if (OfferData.status == "Open") {
+            return (
             <Container>
                 <Card border="success" bg="light" text="dark" className="menu" style={{ width: '54rem' }}>
                     <Card.Header><h1 className="d-flex justify-content-center">Details</h1></Card.Header>
                     <Container>
                         <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
                         <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
-                        <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
-                        <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {OfferData.feeToPay/10**18}</Col></Row>
-                        <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
-                        <Row><Col>Liquidation date: {liquidationDate()}</Col><Col></Col></Row>
+                        <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col></Col></Row>
+                        <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col></Col></Row>
+                        <Row><Col>Owner: {address(OfferData.owner)}</Col><Col></Col></Row>
+                        <Row style={{height: "10px"}}></Row>
                         <Row>{renderType()}</Row>
                         <Row><Button variant="success" onClick={() => props.handleMenu(props.data)}>Close</Button></Row>
                     </Container>
 
                 </Card>
             </Container>
-        ) 
+            ) 
+        } else {
+            return (
+                <Container>
+                    <Card border="success" bg="light" text="dark" className="menu" style={{ width: '54rem' }}>
+                        <Card.Header><h1 className="d-flex justify-content-center">Details</h1></Card.Header>
+                        <Container>
+                            <Row><Col>Offer Id: {props.data}</Col><Col>Status: {OfferData.status}</Col></Row>
+                            <Row><Col>Hero Id: {OfferData.nftId}</Col><Col>Hero Address: {address(OfferData.nft)}</Col></Row>
+                            <Row><Col>Liquidation: {OfferData.liquidation/10**18}</Col><Col>Collateral: {OfferData.collateral/10**18}</Col></Row>
+                            <Row><Col>Hourly Fee: {OfferData.fee/10**18}</Col><Col>Accumulated Fee: {OfferData.feeToPay/10**18}</Col></Row>
+                            <Row><Col>Owner: {address(OfferData.owner)}</Col><Col>Borrower: {address(OfferData.borrower)}</Col></Row>
+                            <Row><Col>Liquidation date: {liquidationDate()}</Col><Col></Col></Row>
+                            <Row style={{height: "10px"}}></Row>
+                            <Row>{renderType()}</Row>
+                            <Row><Button variant="success" onClick={() => props.handleMenu(props.data)}>Close</Button></Row>
+                        </Container>
+    
+                    </Card>
+                </Container>
+            ) 
+        }
     } else {
         return (<Container></Container>)
     }
